@@ -1,28 +1,19 @@
 const sql = require('mssql');
+const { ConnectionPool } = require('mssql');
 
-var config = {
-    server: "DESKTOP-CGH6082",
-    database: "employee",
-    driver: "mssql",
-    option: {
-        trustedConnection: true
-    }
-}
+const config = {
+  user: 'user1',
+  password: '12345',
+  server: 'DESKTOP-75HF6R4',
+  database: 'employee',
+  options: {
+    encrypt: false, // Non-SSL connection
+  },
+};
 
-sql.connect(config, function(error){
-    if (error)console.log(error);
-    var request = new sql.Request();
-    request.query("SELECT * FROM karyawan", function(error, records){
-        if (error)console.log(error);
-        else console.log(records);
-    })
-})
+sql.connect(config, function (error) {
+  if (error) console.log(error);
+  else console.log('Connected to SQL Server');
+});
 
-// const dbPool = sql.createPool({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASS,
-//     database: process.env.DB_NAME,
-// });
-
-// module.exports = dbPool.promise()
+module.exports = sql;
